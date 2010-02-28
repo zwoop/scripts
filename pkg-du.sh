@@ -3,7 +3,7 @@
 # pkg-du.sh: Simple script to find disk space used by installed packages.
 # ----------
 #
-# Author: Leif Hedstrom <zwoop@apache.org>
+# Author: Leif Hedstrom <leif@ogre.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
