@@ -1,0 +1,29 @@
+README
+======
+
+All scripts in this area are releaed into the public domain under the
+GPLv3 license, by me, Leif Hedstrom.
+
+      Copyright (C) 2007  Leif Hedstrom <leif@ogre.com>.
+
+
+box[.pl]
+--------
+
+This little script was inspired by the old Late Night hacking at LiTH in
+the 80's. It's useless, but cute. For example, use it like
+
+
+    $ fortue | box
+
+
+
+pkg-du[.sh]
+-----------
+
+This script, which supports .deb (e.g. Ubuntu) and RPM (e.g. Fedora Core)
+systems, will examine all installed packages, and do a "du" on each
+package. The output is not sorted (yet), but can easily be done in a
+pipe. For example, use it like
+
+    $ pkg-du | sort -nr -k2
