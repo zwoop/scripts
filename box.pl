@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+#                                           -*- coding: no-conversion -*- 
 #
 #    box.pl: Draw simple ANSI box around text.
 #    Copyright (C) 2007  Leif Hedstrom <leif@ogre.com>
