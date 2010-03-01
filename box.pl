@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #
-# box.pl: Draw simple ANSI box around text, inspired from LiTH hackage days.
-# ------      Copyright (C) 2007  Leif Hedstrom <leif@ogre.com>
+#    box.pl: Draw simple ANSI box around text.
+#    Copyright (C) 2007  Leif Hedstrom <leif@ogre.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -56,9 +56,9 @@ $indent = int(($width - 4 - $max_len) / 2);
 
 # Top "frame"
 print " " x $indent if $opts{c};
-print "(0l";(B
-(0print(B (0"q"(B (0x(B (0($max_len(B (0+(B (02);(B
-(0print(B (0"k(B\n";
+print "(0l";
+print "q" x ($max_len + 2);
+print "k(B\n";
 
 # lines
 foreach (@lines) {
@@ -71,6 +71,6 @@ foreach (@lines) {
 
 # Bottom frame
 print " " x $indent if $opts{c};
-print "(0m";(B
-(0print(B (0"q"(B (0x(B (0($max_len(B (0+(B (02);(B
-(0print(B (0"j(B\n";
+print "(0m";
+print "q" x ($max_len + 2);
+print "j(B\n";
