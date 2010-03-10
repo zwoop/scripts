@@ -52,7 +52,7 @@ do_start() {
 
 do_kill() {
     echo "\"\"" "\"\"" > $VBOXFILE
-    VBoxManage list runningvms | awk -F\" '/\"/ {printf "\"%s\" %s\n", $2, $3}' >> $VBOXFILE
+    VBoxManage list runningvms | awk -F\" '/\"/ {printf "\"%s\" %s\n", $2, $3}' | $sort >> $VBOXFILE
     $DIALOG --clear --title "Kill VirtualBox instance (headless)" \
 	--menu "Select a VM from the list below:" 0 0 0 \
 	--file $VBOXFILE  2> $DIAGFILE
