@@ -27,3 +27,15 @@ package. The output is not sorted (yet), but can easily be done in a
 pipe. For example, use it like
 
     $ pkg-du | sort -nr -k2
+
+vboxhl[.sh]
+-----------
+
+Start (and kill) VirtualBox headless instances, from a little interactive
+dialog menu. usage:
+
+       boxhl: Start / stop headless VirtualBox instances
+
+       Options:
+		-s | --start	Select a VM to start
+		-k | --kill	Select a VM to kill
