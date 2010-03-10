@@ -28,7 +28,8 @@ trap "rm -f $DIAGFILE $VBOXFILE" 0 1 2 5 15
 
 do_start() {
     echo "\"\"" "\"\"" > $VBOXFILE
-    VBoxManage  list vms | awk -F\" '/\"/ {printf "\"%s\" %s\n", $2, $3}' >> $VBOXFILE
+    VBoxManage  list vms | awk -F\" '/\"/ {printf "\"%s\" %s\n", $2, $3}' | $sort >> $VBOXFILE
+
     $DIALOG --clear --title "Start VirtualBox (headless)" \
 	--menu "Select a VM from the list below:" 0 0 0 \
 	--file $VBOXFILE  2> $DIAGFILE
@@ -77,9 +78,10 @@ do_help() {
     echo "Options:"
     echo "	-s | --start	Select a VM to start"
     echo "	-k | --kill	Select a VM to kill"
+    echo "	-S | --sort	Sort the VM list by name"
 }
 
-PARGS=`getopt -o skh --long stop,kill,help -n 'vboxhl' -- "$@"`
+PARGS=`getopt -o skSh --long stop,kill,sort,help -n 'vboxhl' -- "$@"`
 
 if [ $? != 0 ] ; then
     echo "Terminating..." >&2 
@@ -87,6 +89,8 @@ if [ $? != 0 ] ; then
 fi
 
 eval set -- "$PARGS"
+
+sort="cat"
 
 while true; do
     case "$1" in
@@ -97,6 +101,10 @@ while true; do
 	-k|--kill)
 	    do_kill
 	    exit 0
+	    ;;
+	-S|--sort)
+	    sort="sort"
+	    shift;
 	    ;;
 	-h|--help)
 	    do_help
