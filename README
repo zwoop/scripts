@@ -11,11 +11,10 @@ box[.pl]
 --------
 
 This little script was inspired by the old Late Night hacking at LiTH in
-the 80's. It's useless, but cute. For example, use it like
+the 80's. It's useless, but cute. An example:
 
 
     $ fortue | box
-
 
 
 pkg-du[.sh]
@@ -28,14 +27,29 @@ pipe. For example, use it like
 
     $ pkg-du | sort -nr -k2
 
+
 vboxhl[.sh]
 -----------
 
 Start (and kill) VirtualBox headless instances, from a little interactive
-dialog menu. usage:
+dialog menu. Usage:
 
        boxhl: Start / stop headless VirtualBox instances
 
        Options:
 		-s | --start	Select a VM to start
 		-k | --kill	Select a VM to kill
+		-S | --sort	Sort the VM list by name
+		-h | --help	Show this help screen
+
+remdiff[.sh]
+------------
+
+Diff a local file (or files) against the same file(s) on a remote
+host. Usage:
+      
+      remdiff: Diff local files against the same files on a remote host
+
+      Options:
+		-H | --host	Remote host name (SSH access required)
+		-h | --help	Sort the VM list by name

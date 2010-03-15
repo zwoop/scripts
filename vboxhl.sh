@@ -79,16 +79,17 @@ do_help() {
     echo "	-s | --start	Select a VM to start"
     echo "	-k | --kill	Select a VM to kill"
     echo "	-S | --sort	Sort the VM list by name"
+    echo "	-h | --help	Show help"
 }
 
-PARGS=`getopt -o skSh --long stop,kill,sort,help -n 'vboxhl' -- "$@"`
+TEMP=`getopt -o skSh --long stop,kill,sort,help -n 'vboxhl' -- "$@"`
 
 if [ $? != 0 ] ; then
     echo "Terminating..." >&2 
     exit 1
 fi
 
-eval set -- "$PARGS"
+eval set -- "$TEMP"
 
 sort="cat"
 
