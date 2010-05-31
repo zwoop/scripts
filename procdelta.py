@@ -1,7 +1,10 @@
 #!/usr/bin/python
 #
-# procdelta.py: Run this tool while benchmarking an app on linux, to get an
-# ---------     overall idea of what the CPU(s) are doing.
+# procdelta.py: Generate some 'stats' from /proc CPU usage, for some
+# ------------  given amount of time interval. This allows you to see
+#               what your CPUs are doing during a test run. This almost
+#               certainly only works on Linux, and I'm sure there are
+#               better tools that does something similar...
 #
 #               Copyright (C) 2007  Leif Hedstrom <leif@ogre.com>
 #
@@ -21,6 +24,7 @@
 import time
 import getopt
 import sys
+
 
 class ProcParser(object):
 
@@ -84,7 +88,9 @@ Options:
     sys.exit(2)
 
 
+# Main
 if __name__ == "__main__":
+
     # Options/settings
     params = {  'interval' : 0,
                 }
