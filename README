@@ -62,4 +62,8 @@ Run this on linux, during an interval where you are benchmarking an
 app. This will show you an overall idea of what the CPU(s) are doing
 during the benchmark. Usage:
 
-       procdelta [-i <interval>] [proc-dump1 proc-dump2]
+       Usage: procdelta [options] [file1 file2]
+
+       Options:
+         -h, --help         Show this message
+	 -i, --interval     Collect proc/stat data sets at this interval
