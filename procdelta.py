@@ -24,9 +24,11 @@
 import time
 import getopt
 import sys
+import os
 
 
 class ProcParser(object):
+    _SC_CLK_TCK = float(os.sysconf("SC_CLK_TCK"))
 
     def __init__(self, f=None):
         if (not f):
@@ -36,6 +38,8 @@ class ProcParser(object):
         except IOError, msg:
             print "Can't open /proc/stat: ", msg
             fd = None
+        self._started = time.time()
+        self._run_for = 0
         self._data = {}
         self._parse(fd)
 
@@ -46,30 +50,32 @@ class ProcParser(object):
 
     def delta(self, other):
         new = ProcParser("/dev/null")
+        new._run_for = self._started - other._started
         for k in self._data.keys():
             new._data[k] = [self._data[k][x]-other._data[k][x] for x in range(0, len(self._data[k]))]
 
         return new
 
     def __str__(self):
-        s = " CPU        USER       NICE       SYS      IDLE       IO Wait      IRQ      SoftIRQ\n"
-        s +=  "-----   --------   --------   --------   ---------   --------   --------   --------\n"
+        s =   " CPU     USER     NICE     SYS      IDLE     Wait     IRQ      SIRQ\n"
+        s +=  "-----   ------   ------   ------   ------   ------   ------   ------\n"
         tags = self._data.keys()
         tags.sort()
+        divider = self._SC_CLK_TCK / self._run_for
         for k in tags:
             if k.startswith("cpu"):
-                s += " %-4s  %9.1f  %9.1f  %9.1f  %10.1f  %9.1f  %9.1f  %9.1f\n" % (
+                s += " %-4s  %6.1f%%  %6.1f%%  %6.1f%%  %6.1f%%  %6.1f%%  %6.1f%%  %6.1f%%\n" % (
                     k,
-                    self._data[k][0] / 100.0,
-                    self._data[k][1] / 100.0,
-                    self._data[k][2] / 100.0,
-                    self._data[k][3] / 100.0,
-                    self._data[k][4] / 100.0,
-                    self._data[k][5] / 100.0,
-                    self._data[k][6] / 100.0)
+                    self._data[k][0] / divider,
+                    self._data[k][1] / divider,
+                    self._data[k][2] / divider,
+                    self._data[k][3] / divider,
+                    self._data[k][4] / divider,
+                    self._data[k][5] / divider,
+                    self._data[k][6] / divider)
 
-        s += "\n\nContext switches:   %s\n" % self._data["ctxt"][0]
-        s += "Interrupts (total): %s\n" % self._data["intr"][0]
+        s += "\n\nContext switches/sec:   %.1f\n" % (self._data["ctxt"][0] / self._run_for)
+        s += "Interrupts/sec: %.1f\n" % (self._data["intr"][0] / self._run_for)
         return s
 
 
@@ -88,7 +94,6 @@ Options:
     sys.exit(2)
 
 
-# Main
 if __name__ == "__main__":
 
     # Options/settings
