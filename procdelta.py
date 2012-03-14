@@ -61,18 +61,18 @@ class ProcParser(object):
         s +=  "-----   ------   ------   ------   ------   ------   ------   ------\n"
         tags = self._data.keys()
         tags.sort()
-        divider = self._SC_CLK_TCK / self._run_for
+
         for k in tags:
             if k.startswith("cpu"):
                 s += " %-4s  %6.1f%%  %6.1f%%  %6.1f%%  %6.1f%%  %6.1f%%  %6.1f%%  %6.1f%%\n" % (
                     k,
-                    self._data[k][0] / divider,
-                    self._data[k][1] / divider,
-                    self._data[k][2] / divider,
-                    self._data[k][3] / divider,
-                    self._data[k][4] / divider,
-                    self._data[k][5] / divider,
-                    self._data[k][6] / divider)
+                    (100 * self._data[k][0] / self._SC_CLK_TCK) / self._run_for,
+                    (100 * self._data[k][1] / self._SC_CLK_TCK) / self._run_for,
+                    (100 * self._data[k][2] / self._SC_CLK_TCK) / self._run_for,
+                    (100 * self._data[k][3] / self._SC_CLK_TCK) / self._run_for,
+                    (100 * self._data[k][4] / self._SC_CLK_TCK) / self._run_for,
+                    (100 * self._data[k][5] / self._SC_CLK_TCK) / self._run_for,
+                    (100 * self._data[k][6] / self._SC_CLK_TCK) / self._run_for)
 
         s += "\n\nContext switches/sec:   %.1f\n" % (self._data["ctxt"][0] / self._run_for)
         s += "Interrupts/sec: %.1f\n" % (self._data["intr"][0] / self._run_for)
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         time.sleep(params["interval"])
         t1 = ProcParser()
     else:
-        usage_exit(msg)
+        usage_exit()
         
     d = t1.delta(t0)
     print d
