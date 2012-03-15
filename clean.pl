@@ -21,9 +21,11 @@
 #    22-Jan-1995   Leif    Added `-c' option, and changed `%' matching.
 #    20-May-1996   Leif    Added `-e' switch, to remove emacs .save files. I
 #                          also moved the other emacs regexp's to $emexp.
+#    14-Mar-2012   Leif    Wow, I've used this tool for 21 years... It finally
+#                          broke, sort of, with the deprecation of getopts.pl.
 #    
 #
-require "getopts.pl";
+use Getopt::Std;
 
 
 #
@@ -67,7 +69,7 @@ sub makeregexp {		# makeregexp(STR regexp)
    $_ .= "$emexp|" if $opt_e || $opt_a;
    $_ .= $_[0] if $_[0];
    chop if !$_[0];
-   s/##/$stdexp/ if !$opt_d;
+
    $_ = $stdexp if $_ eq "";
    s/ //g;			# Don't allow space in filenames
    $stdexp = $_;
@@ -118,7 +120,7 @@ sub handlefile {		# handlefile(STR file)
 #
 unshift (@ARGV, split(/ /, $ENV{"CLEAN_OPTIONS"})); # Env. options
 
-&Getopts('acdefmnprtuvFTi:s:') || die "Usage: $USAGE\n";
+&getopts('acdefmnprtuvFTi:s:') || die "Usage: $USAGE\n";
 $opt_i = 'n' if (defined ($opt_i) && $opt_i eq "");
 
 &makeregexp($opt_s);
