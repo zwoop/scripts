@@ -43,13 +43,13 @@ gen_installed() {
     OLD_IFS=$IFS
     IFS="
 "
-    for l in `yum grouplist`; do
+    for l in $(yum grouplist); do
         if [ "Installed Groups:" == $l ]; then
             in_inst=1
         elif [ "Available Groups:" == $l ]; then
             in_inst=0
         elif [ $in_inst == "1" ]; then
-            echo "\"$l\" \"\" off" >> $YUMGFILE
+            echo "\"$l\" \"\" off" >>$YUMGFILE
         fi
     done
     IFS=$OLD_IFS
@@ -60,44 +60,43 @@ gen_available() {
     OLD_IFS=$IFS
     IFS="
 "
-    for l in `yum grouplist`; do
+    for l in $(yum grouplist); do
         if [ "Available Groups:" == $l ]; then
             in_avail=1
-	elif [ "Done" == "$l" ]; then
-	    in_avail=0
+        elif [ "Done" == "$l" ]; then
+            in_avail=0
         elif [ $in_avail == "1" ]; then
-            echo "\"$l\" \"\" off" >> $YUMGFILE
+            echo "\"$l\" \"\" off" >>$YUMGFILE
         fi
     done
     IFS=$OLD_IFS
 }
-
 
 do_update() {
     gen_installed
 
     $DIALOG --clear --title "Upgrade yum groups" \
         --checklist "Select one or several groups from below to upgrade" 0 0 0 \
-        --file $YUMGFILE  2> $DIAGFILE
+        --file $YUMGFILE 2>$DIAGFILE
 
     retval=$?
 
-    choice=`cat $DIAGFILE`
+    choice=$(cat $DIAGFILE)
     clear
 
     case $retval in
-        $DIALOG_OK)
-            OLD_IFS=$IFS
-            IFS="\"
+    $DIALOG_OK)
+        OLD_IFS=$IFS
+        IFS="\"
 "
-            for word in $(<$DIAGFILE); do
-                if [[ $word =~ [A-Z,a-z] ]]; then
-                    echo ">>> Starting upgrade of $word <<<"
-                    yum groupupdate "$word"
-                fi
-            done
-            IFS=$OLD_IFS
-            ;;
+        for word in $(<$DIAGFILE); do
+            if [[ $word =~ [A-Z,a-z] ]]; then
+                echo ">>> Starting upgrade of $word <<<"
+                yum groupupdate "$word"
+            fi
+        done
+        IFS=$OLD_IFS
+        ;;
     esac
 }
 
@@ -106,24 +105,24 @@ do_remove() {
 
     $DIALOG --clear --title "Remove yum groups" \
         --checklist "Select one or several groups from below to remove" 0 0 0 \
-        --file $YUMGFILE  2> $DIAGFILE
+        --file $YUMGFILE 2>$DIAGFILE
 
     retval=$?
     clear
 
     case $retval in
-        $DIALOG_OK)
-            OLD_IFS=$IFS
-            IFS="\"
+    $DIALOG_OK)
+        OLD_IFS=$IFS
+        IFS="\"
 "
-            for word in $(<$DIAGFILE); do
-                if [[ $word =~ [A-Z,a-z] ]]; then
-                    echo ">>> Starting removal of $word <<<"
-                    yum groupremove "$word"
-                fi
-            done
-            IFS=$OLD_IFS
-            ;;
+        for word in $(<$DIAGFILE); do
+            if [[ $word =~ [A-Z,a-z] ]]; then
+                echo ">>> Starting removal of $word <<<"
+                yum groupremove "$word"
+            fi
+        done
+        IFS=$OLD_IFS
+        ;;
     esac
 }
 
@@ -132,24 +131,24 @@ do_install() {
 
     $DIALOG --clear --title "Add yum groups" \
         --checklist "Select one or several groups from below to install" 0 0 0 \
-        --file $YUMGFILE  2> $DIAGFILE
+        --file $YUMGFILE 2>$DIAGFILE
 
     retval=$?
     clear
 
     case $retval in
-        $DIALOG_OK)
-            OLD_IFS=$IFS
-            IFS="\"
+    $DIALOG_OK)
+        OLD_IFS=$IFS
+        IFS="\"
 "
-            for word in $(<$DIAGFILE); do
-                if [[ $word =~ [A-Z,a-z] ]]; then
-                    echo ">>> Starting install of $word <<<"
-                    yum groupinstall "$word"
-                fi
-            done
-            IFS=$OLD_IFS
-            ;;
+        for word in $(<$DIAGFILE); do
+            if [[ $word =~ [A-Z,a-z] ]]; then
+                echo ">>> Starting install of $word <<<"
+                yum groupinstall "$word"
+            fi
+        done
+        IFS=$OLD_IFS
+        ;;
     esac
 }
 
@@ -162,10 +161,10 @@ do_help() {
     echo "      -i | --install  Select yum groups to install"
 }
 
-PARGS=`getopt -o urih --long update,remove,install,help -n "$MYSELF" -- "$@"`
+PARGS=$(getopt -o urih --long update,remove,install,help -n "$MYSELF" -- "$@")
 
-if [ $? != 0 ] ; then
-    echo "Terminating..." >&2 
+if [ $? != 0 ]; then
+    echo "Terminating..." >&2
     exit 1
 fi
 
@@ -175,29 +174,30 @@ sort="cat"
 
 while true; do
     case "$1" in
-        -u|--update)
-            do_update
-            exit 0
-            ;;
-        -r|--remove)
-            do_remove
-            exit 0
-            ;;
-        -i|--install)
-            do_install
-	    exit 0
-            ;;
-        -h|--help)
-            do_help
-            exit 0
-            ;;
-        --) shift
-            break
-            ;;
-        *)
-            echo "Internal error!"
-            exit 1
-            ;;
+    -u | --update)
+        do_update
+        exit 0
+        ;;
+    -r | --remove)
+        do_remove
+        exit 0
+        ;;
+    -i | --install)
+        do_install
+        exit 0
+        ;;
+    -h | --help)
+        do_help
+        exit 0
+        ;;
+    --)
+        shift
+        break
+        ;;
+    *)
+        echo "Internal error!"
+        exit 1
+        ;;
     esac
 done
 

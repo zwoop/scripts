@@ -18,9 +18,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-HOSTS=$(ssh-keygen -l  -f ~/.ssh/known_hosts | grep "$*" | cut -d\  -f 3)
+HOSTS=$(ssh-keygen -l -f ~/.ssh/known_hosts | grep "$*" | cut -d\  -f 3)
 
-for h in $HOSTS; do 
+for h in $HOSTS; do
     echo "Removing $h..."
-    ssh-keygen -R $h > /dev/null 2>&1
+    ssh-keygen -R $h >/dev/null 2>&1
 done

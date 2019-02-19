@@ -31,48 +31,47 @@ VBOXFILE="/tmp/$(basename $0).$$.vbox"
 trap "rm -f $DIAGFILE $VBOXFILE" 0 1 2 5 15
 
 do_start() {
-    echo "\"\"" "\"\"" > $VBOXFILE
-    VBoxManage  list vms | awk -F\" '/\"/ {printf "\"%s\" %s\n", $2, $3}' | $sort >> $VBOXFILE
+    echo "\"\"" "\"\"" >$VBOXFILE
+    VBoxManage list vms | awk -F\" '/\"/ {printf "\"%s\" %s\n", $2, $3}' | $sort >>$VBOXFILE
 
     $DIALOG --clear --title "Start VirtualBox (headless)" \
-	--menu "Select a VM from the list below:" 0 0 0 \
-	--file $VBOXFILE  2> $DIAGFILE
+        --menu "Select a VM from the list below:" 0 0 0 \
+        --file $VBOXFILE 2>$DIAGFILE
 
     retval=$?
 
-    choice=`cat $DIAGFILE`
+    choice=$(cat $DIAGFILE)
     clear
 
     case $retval in
-	0)
-	    if [ "$choice" != "" ]; then
-		echo "Starting $choice..."
-		VBoxManage startvm "$choice" --type headless
-	    fi
-	    ;;
+    0)
+        if [ "$choice" != "" ]; then
+            echo "Starting $choice..."
+            VBoxManage startvm "$choice" --type headless
+        fi
+        ;;
     esac
 }
 
-
 do_kill() {
-    echo "\"\"" "\"\"" > $VBOXFILE
-    VBoxManage list runningvms | awk -F\" '/\"/ {printf "\"%s\" %s\n", $2, $3}' | $sort >> $VBOXFILE
+    echo "\"\"" "\"\"" >$VBOXFILE
+    VBoxManage list runningvms | awk -F\" '/\"/ {printf "\"%s\" %s\n", $2, $3}' | $sort >>$VBOXFILE
     $DIALOG --clear --title "Kill VirtualBox instance (headless)" \
-	--menu "Select a VM from the list below:" 0 0 0 \
-	--file $VBOXFILE  2> $DIAGFILE
+        --menu "Select a VM from the list below:" 0 0 0 \
+        --file $VBOXFILE 2>$DIAGFILE
 
     retval=$?
 
-    choice=`cat $DIAGFILE`
+    choice=$(cat $DIAGFILE)
     clear
 
     case $retval in
-	0)
-	    if [ "$choice" != "" ]; then
-		echo "Starting $choice..."
-		VBoxManage controlvm "$choice" poweroff
-	    fi
-	    ;;
+    0)
+        if [ "$choice" != "" ]; then
+            echo "Starting $choice..."
+            VBoxManage controlvm "$choice" poweroff
+        fi
+        ;;
     esac
 }
 
@@ -86,10 +85,10 @@ do_help() {
     echo "	-h | --help	Show help"
 }
 
-TEMP=`getopt -o skSh --long stop,kill,sort,help -n 'vboxhl' -- "$@"`
+TEMP=$(getopt -o skSh --long stop,kill,sort,help -n 'vboxhl' -- "$@")
 
-if [ $? != 0 ] ; then
-    echo "Terminating..." >&2 
+if [ $? != 0 ]; then
+    echo "Terminating..." >&2
     exit 1
 fi
 
@@ -99,29 +98,30 @@ sort="cat"
 
 while true; do
     case "$1" in
-	-s|--start)
-	    do_start
-	    exit 0
-	    ;;
-	-k|--kill)
-	    do_kill
-	    exit 0
-	    ;;
-	-S|--sort)
-	    sort="sort"
-	    shift;
-	    ;;
-	-h|--help)
-	    do_help
-	    exit 0
-	    ;;
-	--) shift
-	    break
-	    ;;
-        *)
-	    echo "Internal error!"
-	    exit 1
-	    ;;
+    -s | --start)
+        do_start
+        exit 0
+        ;;
+    -k | --kill)
+        do_kill
+        exit 0
+        ;;
+    -S | --sort)
+        sort="sort"
+        shift
+        ;;
+    -h | --help)
+        do_help
+        exit 0
+        ;;
+    --)
+        shift
+        break
+        ;;
+    *)
+        echo "Internal error!"
+        exit 1
+        ;;
     esac
 done
 

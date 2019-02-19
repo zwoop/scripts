@@ -24,37 +24,36 @@
 # Shared across package managers, $DATA holds all the active files for the pkg
 du_files() {
     if [ -f $DATA ]; then
-	du -Ssc `cat $DATA` 2> /dev/null | awk '/total/ {print $1}'
+        du -Ssc $(cat $DATA) 2>/dev/null | awk '/total/ {print $1}'
     else
-	echo "0"
+        echo "0"
     fi
     rm -f $DATA || exit 1
 }
 
-
 # For Ubuntu and other "deb" style package managers.
 do_dpkg() {
     for pkg in $(dpkg --get-selections | awk '/install/ {print $1}'); do
-	echo -n "$pkg	"
-	for f in $(dpkg -L $pkg); do
-	    if [ -f "$f" ]; then
-		echo $f >> $DATA
-	    fi
-	done
-	du_files
+        echo -n "$pkg	"
+        for f in $(dpkg -L $pkg); do
+            if [ -f "$f" ]; then
+                echo $f >>$DATA
+            fi
+        done
+        du_files
     done
 }
 
 # For Fedora / RedHat (and other RPM based package systems)
 do_rpm() {
     for pkg in $(rpm -qa); do
-	echo -n "$pkg	"
-	for f in $(rpm -q -l $pkg); do
-	    if [ -f "$f" ]; then
-		echo $f >> $DATA
-	    fi
-	done
-	du_files
+        echo -n "$pkg	"
+        for f in $(rpm -q -l $pkg); do
+            if [ -f "$f" ]; then
+                echo $f >>$DATA
+            fi
+        done
+        du_files
     done
 }
 

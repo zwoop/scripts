@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#                                           -*- coding: no-conversion -*- 
+#                                           -*- coding: no-conversion -*-
 #
 # box.pl: Draw simple ANSI box around text.
 # Copyright (C) 2007  Leif Hedstrom <leif@ogre.com>
@@ -32,12 +32,12 @@ getopts('cl:', \%opts);
 # Try to get the terminal width
 my $term_width = 80;
 unless ($opts{l}) {
-  eval 'use Term::ReadKey';
-  unless ($@) {
-    my ($cols,$lines) = GetTerminalSize();
+    eval 'use Term::ReadKey';
+    unless ($@) {
+        my ($cols, $lines) = GetTerminalSize();
 
-    $term_width = $cols if ($cols && $cols > 0);
-  }
+        $term_width = $cols if ($cols && $cols > 0);
+    }
 }
 
 # Setup
@@ -46,13 +46,13 @@ my $max_len = 0;
 my $indent;
 my $width = $opts{l} || $term_width;
 
-while(<>) {
-  chomp;
-  s/\t/        /g;
-  my $len = length($_);
+while (<>) {
+    chomp;
+    s/\t/        /g;
+    my $len = length($_);
 
-  push(@lines, $_);
-  $max_len = $len if $len > $max_len
+    push(@lines, $_);
+    $max_len = $len if $len > $max_len;
 }
 $width = $max_len if $max_len > $width;
 
@@ -66,11 +66,11 @@ print "k(B\n";
 
 # lines
 foreach (@lines) {
-  print " " x $indent if $opts{c};
-  print "(0x(B";
-  print " $_ ";
-  print " " x ($max_len - length($_));
-  print "(0x(B\n";
+    print " " x $indent if $opts{c};
+    print "(0x(B";
+    print " $_ ";
+    print " " x ($max_len - length($_));
+    print "(0x(B\n";
 }
 
 # Bottom frame

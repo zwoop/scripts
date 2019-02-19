@@ -57,8 +57,8 @@ class ProcParser(object):
         return new
 
     def __str__(self):
-        s =   " CPU     USER     NICE     SYS      IDLE     Wait     IRQ      SIRQ\n"
-        s +=  "-----   ------   ------   ------   ------   ------   ------   ------\n"
+        s = " CPU     USER     NICE     SYS      IDLE     Wait     IRQ      SIRQ\n"
+        s += "-----   ------   ------   ------   ------   ------   ------   ------\n"
         tags = self._data.keys()
         tags.sort()
 
@@ -97,8 +97,8 @@ Options:
 if __name__ == "__main__":
 
     # Options/settings
-    params = {  'interval' : 0,
-                }
+    params = {'interval': 0,
+              }
 
     try:
         options, args = getopt.getopt(sys.argv[1:],
@@ -107,14 +107,13 @@ if __name__ == "__main__":
                                        'interval=',
                                        ])
         for opt, value in options:
-            if opt in ('-h', '-H','--help'):
+            if opt in ('-h', '-H', '--help'):
                 usage_exit()
             elif opt in ('-i', '--interval'):
                 params['interval'] += int(value)
 
     except getopt.error, msg:
         usage_exit(msg)
-
 
     if len(args) == 2:
         t0 = ProcParser(args[0])
@@ -125,7 +124,7 @@ if __name__ == "__main__":
         t1 = ProcParser()
     else:
         usage_exit()
-        
+
     d = t1.delta(t0)
     print d
 
