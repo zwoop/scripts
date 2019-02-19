@@ -60,4 +60,19 @@ during the benchmark. Usage:
 
        Options:
          -h, --help         Show this message
-	 -i, --interval     Collect proc/stat data sets at this interval
+         -i, --interval     Collect proc/stat data sets at this interval
+
+## code-make[.pl]
+
+This is a little wrapper over normal make / gnu-make, which provides
+normalization of the file paths produces in error messages. This may
+sound dumb, but if you have recursive Makefile's, then the file names
+are relative to the CWD (working dir), and therefore tools like Visual
+Code does not allow you to click on the error lines. Why is this important?
+Well, with this, you can now open the offending files, at the right line,
+and fix those pesky bugs.
+
+In addition, it also improves (and restores) the colorization of the output.
+This script doesn't take or consume any options on its own, but passes them
+along verbatim to make. You can override which make command to run with the
+**MAKE** environment variable.
