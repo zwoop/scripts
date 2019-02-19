@@ -5,6 +5,13 @@ Apache License, by me, Leif Hedstrom.
 
       Copyright (C) 2007  Leif Hedstrom <leif@ogre.com>.
 
+- [Scripts](#leif-s-scripts)
+  * [box[.pl - ASCI box drawings]](#box-pl-)
+  * [pkg-du[.sh - Disk usage for each install software package]](#pkg-du-sh-)
+  * [vboxhl[.sh - VirtualBox VM start/stop script]](#vboxhl-sh-)
+  * [remdiff[.sh] - Remote diff](#remdiff-sh-)
+  * [procdelta[.py - See the difference in CPU stats over time]](#procdelta-py-)
+  * [code-make[.pl] - Make wrapper, useful for e.g. Visual COde](#code-make-pl-)
 
 ## box[.pl]
 
