@@ -1,5 +1,4 @@
-README
-======
+# Leif's Scripts
 
 All scripts in this area are releaed into the public domain under the
 Apache License, by me, Leif Hedstrom.
@@ -7,8 +6,7 @@ Apache License, by me, Leif Hedstrom.
       Copyright (C) 2007  Leif Hedstrom <leif@ogre.com>.
 
 
-box[.pl]
---------
+## box[.pl]
 
 This little script was inspired by the old Late Night hacking at LiTH in
 the 80's. It's useless, but cute. An example:
@@ -17,8 +15,7 @@ the 80's. It's useless, but cute. An example:
     $ fortune | box
 
 
-pkg-du[.sh]
------------
+## pkg-du[.sh]
 
 This script, which supports .deb (e.g. Ubuntu) and RPM (e.g. Fedora Core)
 systems, will examine all installed packages, and do a "du" on each
@@ -28,8 +25,7 @@ pipe. For example, use it like
     $ pkg-du | sort -nr -k2
 
 
-vboxhl[.sh]
------------
+## vboxhl[.sh]
 
 Start (and kill) VirtualBox headless instances, from a little interactive
 dialog menu. Usage:
@@ -42,8 +38,7 @@ dialog menu. Usage:
 		-S | --sort	Sort the VM list by name
 		-h | --help	Show this help screen
 
-remdiff[.sh]
-------------
+## remdiff[.sh]
 
 Diff a local file (or files) against the same file(s) on a remote
 host. Usage:
@@ -55,8 +50,7 @@ host. Usage:
 		-h | --help	Sort the VM list by name
 
 
-procdelta[.py]
---------------
+## procdelta[.py]
 
 Run this on linux, during an interval where you are benchmarking an
 app. This will show you an overall idea of what the CPU(s) are doing
