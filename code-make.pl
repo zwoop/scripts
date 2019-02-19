@@ -32,10 +32,8 @@ my %COLORS = (
     "warning"  => "yellow",
     "note"     => "blue"
 );
-my $CMD = $ENV{"MAKE"} || "make" . " 2>&1 " . join(" ", @ARGV), "\n";
+my $CMD = $ENV{"MAKE"} || "make" . " 2>&1 " . join(" ", @ARGV);
 my @DIRS = ();
-
-print $COLORS{"_header"}, "\n";
 
 print colored("Running: $CMD\n", $COLORS{"_header"});
 
@@ -51,7 +49,7 @@ while (my $line = <$cmd>) {
 
             # Lazy eval on this, assuming that we will not find errors typically...
             if (!@DIRS) {
-                @DIRS = split(/\n/, `find . -type d | fgrep -v -e .deps -e .libs -e .git`);
+                @DIRS = split(/\n/, `find . -type d | fgrep -v -e .deps -e .libs -e .git -e .vscode`);
             }
 
             foreach (@DIRS) {
