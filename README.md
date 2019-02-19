@@ -6,7 +6,7 @@ Apache License, by me, Leif Hedstrom.
       Copyright (C) 2007  Leif Hedstrom <leif@ogre.com>.
 
 - [Scripts](#leif-s-scripts)
-  * [box[.pl - ASCI box drawings]](#box-pl-)
+  * [box[.pl - ASCII box drawings]](#box-pl-)
   * [pkg-du[.sh - Disk usage for each install software package]](#pkg-du-sh-)
   * [vboxhl[.sh - VirtualBox VM start/stop script]](#vboxhl-sh-)
   * [remdiff[.sh] - Remote diff](#remdiff-sh-)
@@ -19,7 +19,11 @@ This little script was inspired by the old Late Night hacking at LiTH in
 the 80's. It's useless, but cute. An example:
 
 
-    $ fortune | box
+    calculus (09:03) 263/0 $ fortune | box
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │ Wasn't there something about a PASCAL programmer knowing the value of │
+    │ everything and the Wirth of nothing?                                  │
+    └───────────────────────────────────────────────────────────────────────┘
 
 
 ## pkg-du[.sh]
