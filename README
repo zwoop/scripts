@@ -14,7 +14,7 @@ This little script was inspired by the old Late Night hacking at LiTH in
 the 80's. It's useless, but cute. An example:
 
 
-    $ fortue | box
+    $ fortune | box
 
 
 pkg-du[.sh]
@@ -34,7 +34,7 @@ vboxhl[.sh]
 Start (and kill) VirtualBox headless instances, from a little interactive
 dialog menu. Usage:
 
-       boxhl: Start / stop headless VirtualBox instances
+       vboxhl: Start / stop headless VirtualBox instances
 
        Options:
 		-s | --start	Select a VM to start
